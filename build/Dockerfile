@@ -1,3 +1,6 @@
-FROM golang:1.15.8
+FROM golang:1.19.5-bullseye
 
-WORKDIR /app
+WORKDIR /opt/golang_practice
+
+COPY go.mod go.sum ./
+RUN go mod download

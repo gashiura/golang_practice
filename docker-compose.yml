@@ -3,12 +3,12 @@ services:
   api:
     container_name: go_api
     build:
-      context: ./build
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: build/Dockerfile
     environment:
-      DATABASE: mysql://mysql:password@tcp(db:3306)/golang
+      MYSQL_DSN: mysql://mysql:password@tcp(db:3306)/golang_practice
     volumes:
-      - .:/app
+      - .:/opt/golang_practice
     ports:
       - "8080:8080"
     depends_on:
@@ -18,7 +18,7 @@ services:
     image: mysql:5.7
     container_name: db
     environment:
-      MYSQL_DATABASE: golang
+      MYSQL_DATABASE: golang_practice
       MYSQL_USER: mysql
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password

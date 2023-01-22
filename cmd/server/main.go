@@ -14,12 +14,18 @@ import (
 func main() {
 	log.Info().Msg("Start server.")
 	r := chi.NewRouter()
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(1 * time.Second))
+
 	r.Route("/users", func(r chi.Router) {
 		r.Route("/{userID}", func(r chi.Router) {
 			r.Get("/", controller.UserShowAction)
 		})
 	})
+
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		log.Fatal().Err(err).Msg("Can't start server.")
 	}

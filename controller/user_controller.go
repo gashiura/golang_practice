@@ -23,6 +23,5 @@ func UserShowAction(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.Error().Err(err).Msg("user not found.")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
 }

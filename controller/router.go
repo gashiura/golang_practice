@@ -13,7 +13,7 @@ func Routes() *chi.Mux {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-	r.Use(middleware.Timeout(1 * time.Second))
+	r.Use(middleware.Timeout(60 * time.Second))
 
 	r.Route("/users", func(r chi.Router) {
 		r.Route("/{userID}", func(r chi.Router) {

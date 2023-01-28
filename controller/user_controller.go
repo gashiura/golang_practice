@@ -19,7 +19,13 @@ func UserShowAction(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 		return
 	}
-	user := model.User{ID: id, UID: "TestUser1", Email: "example+1000@gmail.com"}
+	user, err := model.FindUser(id)
+	if err != nil {
+		log.Error().Err(err)
+		http.Error(w, "404 page not found", http.StatusNotFound)
+		return
+	}
+
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.Error().Err(err).Msg("user not found.")
 		http.Error(w, err.Error(), http.StatusInternalServerError)

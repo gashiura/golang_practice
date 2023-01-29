@@ -1,0 +1,10 @@
+FROM golang:1.19.5-bullseye as builder
+WORKDIR /opt/golang_practice
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . ./
+RUN cd cmd/server && go build -trimpath -ldflags="-w -s" -o /go/bin/go_api
+
+FROM gcr.io/distroless/base-debian11
+COPY --from=builder /go/bin/go_api /
+CMD ["/go_api"]

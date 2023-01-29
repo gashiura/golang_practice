@@ -1,7 +1,7 @@
 package model
 
 import (
-  "errors"
+  "fmt"
 )
 
 type User struct {
@@ -23,5 +23,13 @@ func FindUser(userID int) (*User, error) {
       return &u, nil
     }
   }
-  return nil, errors.New("user not found.")
+  return nil, &UserNotFoundError{id: userID}
+}
+
+type UserNotFoundError struct {
+  id int
+}
+
+func (e *UserNotFoundError) Error() string {
+  return fmt.Sprintf("UserID: %d not found", e.id)
 }

@@ -12,7 +12,8 @@ func TestUserShowAction(t *testing.T) {
 		userID string
 		want int
 	}{
-		{ "userID is integer", "100", 200 },
+		{ "userID exists", "1", 200 },
+		{ "userID not exists", "100", 404 },
 		{ "userID is string", "abcde", 404 },
 	}
 
